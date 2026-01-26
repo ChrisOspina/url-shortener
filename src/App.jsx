@@ -22,15 +22,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+        ),
       },
       {
         path: "/link/:id",
-        element: <LinkPage />,
+        element: (
+          <RequireAuth>
+            <LinkPage />
+          </RequireAuth>
+        ),
       },
       {
         path: "/:id",
-        element: <RedirectLink />,
+        element: (
+          <RequireAuth>
+            <RedirectLink />
+          </RequireAuth>
+        ),
       },
     ],
   },
