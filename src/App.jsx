@@ -7,6 +7,7 @@ import Dashboard from "./pages/dashboard.jsx";
 import LinkPage from "./pages/link.jsx";
 import RedirectLink from "./pages/redirect-link.jsx";
 import UrlProvider from "./context";
+import RequireAuth from "./components/require-auth.jsx";
 
 const router = createBrowserRouter([
   {

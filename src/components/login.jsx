@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -48,7 +47,7 @@ const Login = () => {
     } else if (error) {
       setErrors({ message: error.message });
     }
-  }, [data, error]);
+  }, [data, error, fetchUser, longLink, navigate]);
 
   const handleLogin = async () => {
     setErrors({});
