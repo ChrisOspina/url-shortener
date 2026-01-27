@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect } from "react";
-import useFetch from "./hooks/use-fetch";
 import { getCurrentUser } from "./db/apiAuth";
+import useFetch from "./hooks/use-fetch";
+
 const UrlContext = createContext();
 
 const UrlProvider = ({ children }) => {
@@ -10,7 +11,7 @@ const UrlProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
+  }, []);
 
   return (
     <UrlContext.Provider value={{ user, fetchUser, loading, isAuthenticated }}>
@@ -20,7 +21,7 @@ const UrlProvider = ({ children }) => {
 };
 
 export const UrlState = () => {
-  useContext(UrlContext);
+  return useContext(UrlContext);
 };
 
 export default UrlProvider;
