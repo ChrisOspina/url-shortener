@@ -12,3 +12,14 @@ export async function getUrls(user_id) {
   }
   return session.session?.user;
 }
+
+export async function deleteUrl(id) {
+  const { data, error } = await supabase.from("urls").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Unable to delete Url");
+  }
+
+  return data;
+}
