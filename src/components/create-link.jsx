@@ -39,6 +39,9 @@ const CreateLink = () => {
           <Input id="customUrl" placeholder="Custom Link (optional)" />
         </div>
         <Error message={"An error occurred"} />
+        <DialogFooter>
+          <Button variant="destructive">Create Link</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
