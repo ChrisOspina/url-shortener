@@ -15,25 +15,29 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const { user } = UrlState();
+  // console.log(user.id);
   const { loading, error, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
 
   const {
     loading: loadingClicks,
     data: clicks,
     fn: fnClicks,
-  } = useFetch(getClicksForUrls, urls ? urls.map((url) => url.id) : []);
+  } = useFetch(
+    getClicksForUrls,
+    urls?.map((url) => url.id),
+  );
+
   useEffect(() => {
     fnUrls();
   }, []);
-  useEffect(() => {
-    if (urls?.length) {
-      fnClicks();
-    }
-  }, [urls?.length, fnClicks]);
 
   const filteredUrls = urls?.filter((url) =>
     url.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  useEffect(() => {
+    if (urls?.length) fnClicks();
+  }, [urls?.length]);
 
   return (
     <div className="flex flex-col gap-8">
@@ -46,7 +50,7 @@ const Dashboard = () => {
             <CardTitle>Links Created</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>{urls?.length}</p>
+            <p>{urls?.length || 0}</p>
           </CardContent>
         </Card>
         <Card>
@@ -54,7 +58,7 @@ const Dashboard = () => {
             <CardTitle>Total Clicks</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>{clicks?.length}</p>
+            <p>{clicks?.length || 0}</p>
           </CardContent>
         </Card>
       </div>

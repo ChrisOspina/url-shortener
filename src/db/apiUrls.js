@@ -1,3 +1,4 @@
+import { UAParser } from "ua-parser-js";
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getUrls(user_id) {
@@ -10,6 +11,7 @@ export async function getUrls(user_id) {
     console.error(error.message);
     throw new Error("Unable to load URLs");
   }
+  console.log(session);
   return session.session?.user;
 }
 
@@ -74,4 +76,46 @@ export async function getLongUrl(id) {
   }
 
   return shortLinkData;
+}
+
+const parser = new UAParser();
+
+export const storeClicks = async ({ id, original_url }) => {
+  try {
+    const res = parser.getResult();
+    const device = res.device.type || "desktop";
+
+    const response = await fetch(`https://ipapi.co/json/`);
+    const { city, country_name: country } = await response.json();
+
+    await supabase.from("clicks").insert([
+      {
+        url_id: id,
+        device,
+        city,
+        country,
+      },
+    ]);
+
+    window.location.href = original_url;
+  } catch (error) {
+    console.error("Error storing click data:", error);
+    window.location.href = original_url;
+  }
+};
+
+export async function getUrl({ id, user_id }) {
+  const { data, error } = await supabase
+    .from("urls")
+    .select("*")
+    .eq("id", id)
+    .eq("user_id", user_id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Short Url not found");
+  }
+
+  return data;
 }
