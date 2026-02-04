@@ -10,6 +10,9 @@ import { LinkIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Copy, Download, Trash } from "lucide-react";
 import { BeatLoader } from "react-spinners";
+import Location from "@/components/location-stats";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import DeviceStats from "@/components/device-stats";
 
 const LinkPage = () => {
   const { id } = useParams();
